@@ -49,3 +49,4 @@ npm test          # headless, gera o relatório em cypress/reports/index.html
 
 O workflow **Testes E2E - Cypress** roda a cada push na `main`, em pull requests ou manualmente (*Actions → Run workflow*).
 Ao final, o relatório HTML do mochawesome fica disponível para download como artefato **relatorio-cypress** na página da execução.
+Os screenshots das falhas já vão embutidos no relatório. No CI a execução também é gravada em vídeo, publicado como artefato **video-cypress** apenas quando algum teste falha.
