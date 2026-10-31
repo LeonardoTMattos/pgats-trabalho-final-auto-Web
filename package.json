@@ -1,0 +1,16 @@
+{
+  "name": "pgats-trabalho-final",
+  "version": "1.0.0",
+  "description": "Trabalho de Conclusão - Automação Web com Cypress (PGATS) no Automation Exercise",
+  "scripts": {
+    "cy:open": "cypress open",
+    "test": "cypress run --spec cypress/e2e/trabalho-final.cy.js"
+  },
+  "keywords": ["cypress", "automation-exercise", "pgats"],
+  "author": "Leonardo Mattos",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "13.7.3",
+    "cypress-mochawesome-reporter": "^3.8.4"
+  }
+}

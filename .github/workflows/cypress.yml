@@ -1,0 +1,34 @@
+name: Testes E2E - Cypress
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar testes do trabalho final
+        run: npm test
+
+      - name: Publicar relatório HTML (mochawesome)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-cypress
+          path: cypress/reports
+          retention-days: 30
