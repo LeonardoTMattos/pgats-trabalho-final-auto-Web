@@ -17,7 +17,6 @@ describe('Automation Exercise - Trabalho Final', () => {
 
   beforeEach(() => {
     usuario = gerarUsuario()
-    menu.acessarPaginaInicial()
   })
 
   // Garante que nenhuma conta criada pelos testes fique para trás, mesmo se o teste falhar
@@ -27,8 +26,14 @@ describe('Automation Exercise - Trabalho Final', () => {
 
   context('Cadastro e login', () => {
     it('TC1 - Cadastrar usuário', () => {
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('login')
-      cadastro.cadastrarUsuario(usuario)
+
+      cadastro.iniciarCadastro(usuario.nome, usuario.email)
+      cadastro.verificarFormularioDeInformacoesDaConta()
+      cadastro.preencherCadastro(usuario)
+      cadastro.verificarSeCadastroFoiEfetuadoComSucesso()
       menu.verificarUsuarioLogado(usuario.nome)
 
       menu.excluirConta()
@@ -38,6 +43,8 @@ describe('Automation Exercise - Trabalho Final', () => {
     it('TC2 - Login com e-mail e senha corretos', () => {
       conta.criarContaViaApi(usuario)
 
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('login')
       login.fazerLogin(usuario.email, usuario.senha)
       menu.verificarUsuarioLogado(usuario.nome)
@@ -47,6 +54,8 @@ describe('Automation Exercise - Trabalho Final', () => {
     })
 
     it('TC3 - Login com e-mail e senha incorretos', () => {
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('login')
       login.fazerLogin(gerarEmailUnico('nao-cadastrado'), 'senhaIncorreta')
       login.verificarErroDeLoginInvalido()
@@ -55,6 +64,8 @@ describe('Automation Exercise - Trabalho Final', () => {
     it('TC4 - Logout de usuário', () => {
       conta.criarContaViaApi(usuario)
 
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('login')
       login.fazerLogin(usuario.email, usuario.senha)
       menu.verificarUsuarioLogado(usuario.nome)
@@ -66,6 +77,8 @@ describe('Automation Exercise - Trabalho Final', () => {
     it('TC5 - Cadastrar usuário com e-mail já existente', () => {
       conta.criarContaViaApi(usuario)
 
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('login')
       cadastro.iniciarCadastro(usuario.nome, usuario.email)
       cadastro.verificarErroDeEmailJaCadastrado()
@@ -74,6 +87,8 @@ describe('Automation Exercise - Trabalho Final', () => {
 
   context('Produtos e newsletter', () => {
     it('TC8 - Verificar todos os produtos e o detalhe de um produto', () => {
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('produtos')
       produtos.verificarPaginaDeTodosOsProdutos()
 
@@ -84,6 +99,8 @@ describe('Automation Exercise - Trabalho Final', () => {
     it('TC9 - Pesquisar produto', () => {
       const termo = 'Jeans'
 
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('produtos')
       produtos.verificarPaginaDeTodosOsProdutos()
 
@@ -92,6 +109,8 @@ describe('Automation Exercise - Trabalho Final', () => {
     })
 
     it('TC10 - Verificar inscrição na newsletter pelo rodapé da home', () => {
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       newsletter.inscreverNaNewsletter(usuario.email)
       newsletter.verificarInscricaoComSucesso()
     })
@@ -99,6 +118,8 @@ describe('Automation Exercise - Trabalho Final', () => {
 
   context('Compra', () => {
     it('TC15 - Fazer pedido: cadastrar antes do checkout', () => {
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('login')
       cadastro.cadastrarUsuario(usuario)
       menu.verificarUsuarioLogado(usuario.nome)
@@ -121,6 +142,8 @@ describe('Automation Exercise - Trabalho Final', () => {
     it('TC16 - Fazer pedido: login antes do checkout', () => {
       conta.criarContaViaApi(usuario)
 
+      menu.acessarPaginaInicial()
+      menu.verificarPaginaInicial()
       menu.navegarPara('login')
       login.fazerLogin(usuario.email, usuario.senha)
       menu.verificarUsuarioLogado(usuario.nome)

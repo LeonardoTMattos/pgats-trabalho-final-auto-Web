@@ -35,9 +35,12 @@ function iniciarCadastro(nome, email) {
   cy.get(seletores.botaoSignup).click()
 }
 
-function preencherCadastro(usuario) {
-  cy.get(seletores.tituloInformacoesConta).first().should('have.text', 'Enter Account Information')
+function verificarFormularioDeInformacoesDaConta() {
+  cy.url().should('include', '/signup')
+  cy.get(seletores.tituloInformacoesConta).first().should('be.visible').and('have.text', 'Enter Account Information')
+}
 
+function preencherCadastro(usuario) {
   cy.get(usuario.titulo === 'Mrs' ? seletores.generoFeminino : seletores.generoMasculino).check()
   cy.get(seletores.senha).type(usuario.senha, { log: false })
   cy.get(seletores.dia).select(usuario.dia)
@@ -75,12 +78,14 @@ function verificarErroDeEmailJaCadastrado() {
 // Fluxo completo de cadastro pela interface (usado no TC1 e no TC15)
 function cadastrarUsuario(usuario) {
   iniciarCadastro(usuario.nome, usuario.email)
+  verificarFormularioDeInformacoesDaConta()
   preencherCadastro(usuario)
   verificarSeCadastroFoiEfetuadoComSucesso()
 }
 
 module.exports = {
   iniciarCadastro,
+  verificarFormularioDeInformacoesDaConta,
   preencherCadastro,
   verificarSeCadastroFoiEfetuadoComSucesso,
   verificarErroDeEmailJaCadastrado,

@@ -8,20 +8,28 @@ const seletores = {
   usuarioLogado: '.shop-menu a > b',
 }
 
+const linksDoMenu = {
+  login: seletores.linkLoginCadastro,
+  produtos: seletores.linkProdutos,
+  carrinho: seletores.linkCarrinho,
+}
+
 function acessarPaginaInicial() {
   cy.visit('/')
+}
+
+function verificarPaginaInicial() {
   cy.title().should('eq', 'Automation Exercise')
   cy.get('#slider').should('be.visible')
 }
 
 // menu: 'login' | 'produtos' | 'carrinho'
 function navegarPara(menu) {
-  const links = {
-    login: seletores.linkLoginCadastro,
-    produtos: seletores.linkProdutos,
-    carrinho: seletores.linkCarrinho,
+  const link = linksDoMenu[menu]
+  if (!link) {
+    throw new Error(`Menu "${menu}" inválido. Use: ${Object.keys(linksDoMenu).join(', ')}`)
   }
-  cy.get(seletores.menuSuperior).find(links[menu]).click()
+  cy.get(seletores.menuSuperior).find(link).click()
 }
 
 function verificarUsuarioLogado(nome) {
@@ -37,4 +45,4 @@ function excluirConta() {
   cy.get(seletores.linkExcluirConta).click()
 }
 
-module.exports = { acessarPaginaInicial, navegarPara, verificarUsuarioLogado, fazerLogout, excluirConta }
+module.exports = { acessarPaginaInicial, verificarPaginaInicial, navegarPara, verificarUsuarioLogado, fazerLogout, excluirConta }
