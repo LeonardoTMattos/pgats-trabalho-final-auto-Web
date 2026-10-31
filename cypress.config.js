@@ -2,7 +2,8 @@ const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   watchForFileChanges: false,
-  video: false,
+  // Grava vídeo só no CI (GitHub Actions define CI=true); localmente o modo interativo já mostra tudo
+  video: Boolean(process.env.CI),
   viewportWidth: 1366,
   viewportHeight: 768,
   defaultCommandTimeout: 10000,

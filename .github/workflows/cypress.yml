@@ -32,3 +32,12 @@ jobs:
           name: relatorio-cypress
           path: cypress/reports
           retention-days: 30
+
+      # Screenshots já vão dentro do relatório; o vídeo só interessa quando algo falhou
+      - name: Publicar vídeo da execução (só em falha)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-cypress
+          path: cypress/videos
+          retention-days: 7
